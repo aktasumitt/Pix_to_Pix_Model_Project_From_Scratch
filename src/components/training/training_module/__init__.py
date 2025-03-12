@@ -30,7 +30,7 @@ class TrainingModule():
             fake_img=self.model_generator(edge_img)   # Generate Fake img
                 
             # Discriminator
-            with torch.cuda.amp.autocast("cuda"):
+            with torch.amp.autocast("cuda"):
                 self.model_discriminator.zero_grad()
                 fake_disc=self.model_discriminator(edge_img,real_img) 
                 real_disc=self.model_discriminator(edge_img,fake_img.detach())
@@ -50,7 +50,7 @@ class TrainingModule():
             raise ExceptionNetwork(e,sys)
     def train_generator(self,edge_img,fake_img,real_img):  # Generator
         try:  
-            with torch.cuda.amp.autocast("cuda"):
+            with torch.amp.autocast("cuda"):
                 self.model_generator.zero_grad()
                 fake_disc_gen=self.model_discriminator(edge_img,fake_img)
                 

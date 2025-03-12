@@ -33,8 +33,8 @@ class Training():
         self.loss_l1=torch.nn.L1Loss()
         
         # Gradient Scalers
-        self.gradient_scaler_disc=torch.cuda.amp.GradScaler("cuda")
-        self.gradient_scaler_gen=torch.cuda.amp.GradScaler("cuda")
+        self.gradient_scaler_disc=torch.amp.GradScaler("cuda")
+        self.gradient_scaler_gen=torch.amp.GradScaler("cuda")
         
     def load_object(self):
         try:
