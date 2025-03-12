@@ -1,0 +1,3 @@
+['remote "origin"']
+    url = s3://dvc
+    endpointurl = https://dagshub.com/umitaktas/Pix_to_Pix_Model_Project_From_Scratch.s3
