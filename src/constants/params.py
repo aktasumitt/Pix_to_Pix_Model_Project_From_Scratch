@@ -12,9 +12,9 @@ class Params:
     
     
     # Training Stage
-    batch_size = 50
+    batch_size = 10
     device = "cuda"
-    learning_rate = 5e-4
+    learning_rate = 2e-4
     betas = (0.5,0.999)
     epochs = 20
     load_checkpoint = False

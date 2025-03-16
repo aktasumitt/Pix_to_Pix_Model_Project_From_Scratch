@@ -26,15 +26,16 @@ class TrainingModule():
 
     def train_discriminator(self,edge_img,real_img):
         try:
-
-            fake_img=self.model_generator(edge_img)   # Generate Fake img
                 
             # Discriminator
             with torch.amp.autocast("cuda"):
-                self.model_discriminator.zero_grad()
-                fake_disc=self.model_discriminator(edge_img,real_img) 
+                
+                fake_img=self.model_generator(edge_img) # Generate Fake img
+                
+                self.optimizer_disc.zero_grad()
+                
+                fake_disc=self.model_discriminator(edge_img,real_img)
                 real_disc=self.model_discriminator(edge_img,fake_img.detach())
-
 
                 loss_real=self.loss_bce(real_disc,torch.ones_like(real_disc))
                 loss_fake=self.loss_bce(fake_disc,torch.zeros_like(fake_disc))
@@ -48,10 +49,13 @@ class TrainingModule():
         
         except Exception as e:
             raise ExceptionNetwork(e,sys)
+        
     def train_generator(self,edge_img,fake_img,real_img):  # Generator
         try:  
             with torch.amp.autocast("cuda"):
-                self.model_generator.zero_grad()
+                
+                self.optimizer_gen.zero_grad()
+                
                 fake_disc_gen=self.model_discriminator(edge_img,fake_img)
                 
                 gen_loss_bce=self.loss_bce(fake_disc_gen,torch.ones_like(fake_disc_gen))

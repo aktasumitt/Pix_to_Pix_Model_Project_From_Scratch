@@ -14,14 +14,17 @@ class DataTransformation:
     def transformer(self,resize_size:int=286,crop_size:int=256,edge:bool=False):
         try:
             transformer=transforms.Compose([transforms.Resize((resize_size,resize_size)),
-                                            transforms.ToTensor(),
-                                            transforms.RandomCrop((crop_size,crop_size))])
+                                            transforms.RandomCrop((crop_size,crop_size))
+                                            ])
             
             if edge==True:
                 transformer=transforms.Compose([transformer,
                                                  transforms.Grayscale(1)])
             
-            return transformer
+            tensor_transformer=transforms.Compose([transformer,
+                                                  transforms.ToTensor()])
+            return tensor_transformer
+        
         except Exception as e:
             raise ExceptionNetwork(e, sys)
     
@@ -48,8 +51,9 @@ class DataTransformation:
             transformer_real = self.transformer(self.config.resize_size,self.config.crop_size)
             transformer_edge = self.transformer(self.config.resize_size,self.config.crop_size,edge=True)
             
-            train_dataset = DatasetModule(real_img_list,edge_img_list,transformer_real,transformer_edge)  
-            train_dataset,valid_dataset,test_dataset=self.random_split_data(train_dataset,
+            full_dataset = DatasetModule(real_img_list,edge_img_list,transformer_real,transformer_edge)  
+            
+            train_dataset,valid_dataset,test_dataset=self.random_split_data(full_dataset,
                                                                             test_rate=self.config.test_rate,
                                                                             valid_rate=self.config.valid_rate)
             
@@ -64,9 +68,6 @@ class DataTransformation:
             
         except Exception as e:
             raise ExceptionNetwork(e, sys)
-
-
-
 
 
 if __name__ == "__main__":

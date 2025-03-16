@@ -33,8 +33,8 @@ class Training():
         self.loss_l1=torch.nn.L1Loss()
         
         # Gradient Scalers
-        self.gradient_scaler_disc=torch.amp.GradScaler("cuda")
-        self.gradient_scaler_gen=torch.amp.GradScaler("cuda")
+        self.gradient_scaler_disc=torch.amp.GradScaler(self.config.device)
+        self.gradient_scaler_gen=torch.amp.GradScaler(self.config.device)
         
     def load_object(self):
         try:
@@ -42,7 +42,7 @@ class Training():
             train_dataloader=DataLoader(train_dataset, batch_size=self.config.batch_size, shuffle=True)
             
             valid_dataset= load_obj(self.config.valid_dataset_path)
-            valid_dataloader=DataLoader(valid_dataset, batch_size=self.config.batch_size, shuffle=False),
+            valid_dataloader=DataLoader(valid_dataset, batch_size=self.config.batch_size, shuffle=False)
             
             return train_dataloader,valid_dataloader
         
@@ -92,8 +92,7 @@ class Training():
                     model_gen=self.generator_model,
                     model_disc=self.discriminator_model,
                     optimizer_gen=self.optimizer_gen,
-                    optimizer_disc=self.optimizer_disc,
-                )
+                    optimizer_disc=self.optimizer_disc)
                 
                 images_generated,loss_valid = validation_model(
                     valid_dataloader=valid_dataloader,
