@@ -1,8 +1,8 @@
 # Pix2Pix Model WITH UT-Zappos50K Dataset
 
 ## Introduction:
--In this project, I aimed to train a Pix2Pix model architecture for image to image translation.
--The aim of the training is to transform 1-dimensional gray shoe sketches into 3-dimensional RGB real shoe images.
+- In this project, I aimed to train a Pix2Pix model architecture for image to image translation.
+- The aim of the training is to transform 1-dimensional gray shoe sketches into 3-dimensional RGB real shoe images.
 
 ## Models:
 - For training, I utilized the Pix2pix model, which I coded from scratch.
